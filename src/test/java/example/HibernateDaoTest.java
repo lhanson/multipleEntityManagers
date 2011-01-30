@@ -19,14 +19,14 @@ public class HibernateDaoTest {
     @Test
     public void testStoreAndRetrieveEntity() {
         assertNotNull(this.dao);
-        assertNull(this.dao.getEntityById(1));
+        assertNull(this.dao.getEntityById(1L));
 
         EntityA entity = new EntityA();
         entity.setAuthorId(1);
         entity.setText("Text from author 1");
         this.dao.storeEntity(entity);
 
-//        assertNotNull(this.dao.getEntityById(1));
+        assertEquals(1, this.dao.getAllEntities().size());
     }
 
 }

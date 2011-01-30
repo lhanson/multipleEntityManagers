@@ -1,24 +1,31 @@
 package example.dao;
 
-import example.om.EntityA;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import example.om.EntityA;
 
 public class EntityDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public EntityA getEntityById(Integer id) {
-        EntityA entity = null;
-        try {
-            entity = this.entityManager.find(EntityA.class, id);
-        }
-        catch (Throwable t) {
-            System.out.println("THREW: " + t);
-        }
-        return entity;
+    public EntityA getEntityById(Long id) {
+        return this.entityManager.find(EntityA.class, id);
     }
 
+    public List<EntityA> getAllEntities() {
+        final Query query = this.entityManager.createQuery("from EntityA");
+        @SuppressWarnings("unchecked") // the query specifies type
+        final List<EntityA> entities = query.getResultList();
+        return entities;
+    }
+
+    @Transactional
     public void storeEntity(EntityA entity) {
         this.entityManager.persist(entity);
     }
