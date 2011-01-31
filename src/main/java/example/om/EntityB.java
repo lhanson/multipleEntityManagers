@@ -12,8 +12,8 @@ import org.hibernate.annotations.Parameter;
         name = "ID_GEN",
         strategy =  "native",
         parameters = {@Parameter(name="sequence",
-                                 value= "id_seq_a")})
-public class EntityA {
+                                 value= "id_seq_b")})
+public class EntityB {
     @Id
     @GeneratedValue(generator="ID_GEN")
     private final Long id;
@@ -22,7 +22,7 @@ public class EntityA {
     @Column(name = "text")
     private String text;
 
-    public EntityA() {
+    public EntityB() {
         this.id = -1L;
     }
 

@@ -8,13 +8,18 @@
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
     <context:annotation-config />
-    <tx:annotation-driven />
+<!--    <tx:annotation-driven />-->
     
-    <bean id="entityDaoA" class="example.dao.EntityDaoA" />
+    <bean id="entityDaoA" class="example.dao.EntityDaoA">
+        <property name="entityManagerFactory" ref="entityManagerFactoryA" />
+    </bean>
+    <bean id="entityDaoB" class="example.dao.EntityDaoB">
+        <property name="entityManagerFactory" ref="entityManagerFactoryB" />
+    </bean>
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="entityManagerFactoryA" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource">
-            <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+            <bean class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
                 <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
                 <property name="url" value="jdbc:hsqldb:mem:CGTest" />
                 <property name="username" value="sa" />
@@ -23,10 +28,24 @@
                 <property name="autoCommit" value="true" />
             </bean>
         </property>
-        <property name="persistenceUnitName" value="pu" />
+        <property name="persistenceUnitName" value="puA" />
     </bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    <bean id="entityManagerFactoryB" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource">
+            <bean class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+                <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+                <property name="url" value="jdbc:hsqldb:mem:CGTest" />
+                <property name="username" value="sa" />
+                <property name="password" value="" />
+                <property name="suppressClose" value="true" />
+                <property name="autoCommit" value="true" />
+            </bean>
+        </property>
+        <property name="persistenceUnitName" value="puB" />
     </bean>
+
+<!--    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
+<!--        <property name="entityManagerFactory" ref="entityManagerFactoryA" />-->
+<!--    </bean>-->
 </beans>
