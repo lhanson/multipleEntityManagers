@@ -10,7 +10,7 @@
     <context:annotation-config />
     <tx:annotation-driven />
     
-    <bean id="entityDao" class="example.dao.EntityDao" />
+    <bean id="entityDaoA" class="example.dao.EntityDaoA" />
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource">

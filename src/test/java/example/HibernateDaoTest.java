@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import example.dao.EntityDao;
+import example.dao.EntityDaoA;
 import example.om.EntityA;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:testApplicationContext.xml"})
 public class HibernateDaoTest {
     @Autowired
-    private EntityDao dao;
+    private EntityDaoA dao;
 
     @Test
     public void testStoreAndRetrieveEntity() {

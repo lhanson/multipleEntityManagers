@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import example.om.EntityA;
 
-public class EntityDao {
+public class EntityDaoA {
     @PersistenceContext
     private EntityManager entityManager;
 
