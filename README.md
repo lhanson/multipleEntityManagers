@@ -25,12 +25,11 @@ methods and wrap them in transactions using the appropriate `EntityManager`.
 # Run it #
 
 Simply run "mvn test" to see a passing unit test demonstrating persistence to
-two different data sources. The "two-data-sources-works" tag shows this final
-desired functionality.
+two different data sources. HEAD will show this final desired functionality.
 
 To see the failing unit test introduced when a second data source is added and
-Spring ceases to use the `@Transactional` annotations, check out
-"two-data-sources-broken".
+Spring ceases to use the `@Transactional` annotations, check out the
+"two-data-sources-broken" tag.
 
 The "one-data-source" tag represents the baseline functionality Spring provides
 when using a single data source and `@PersistenceContext` and `@Transactional`
