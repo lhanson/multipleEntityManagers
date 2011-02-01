@@ -1,6 +1,9 @@
 A simple demonstration program illustrating the use of Spring's @Transactional
 annotation when multiple data sources are present.
 
+Fair warning: this is mostly just exploratory code and still has a couple of
+shortcomings to solve before being more than a toy. Read on for details.
+
 # Problem #
 Spring 2.5.x provides nice support for declarative transactions via injection
 of the `EntityManagerFactory` using `@PersistenceContext` and demarcation of
@@ -21,6 +24,10 @@ declarative style while adding more than one data source. You still need to
 explicitly inject an `EntityManagerFactory` (and expose it via an interface),
 but through the use of an AOP proxy we can intercept calls to @Transactional
 methods and wrap them in transactions using the appropriate `EntityManager`.
+
+*NOTE*: See the TODO file for shortcomings. Notably, this will break unit tests
+unless they're somehow wrapped with rollback semantics, and support for other
+rollback parameters to `@Transactional` are not shown.
 
 # Run it #
 
