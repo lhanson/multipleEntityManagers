@@ -22,26 +22,18 @@ public class HibernateDaoTest {
 
     @Test
     public void testStoreAndRetrieveEntity() {
-        assertNotNull(this.daoA);
-        assertNull(this.daoA.getEntityById(1L));
-        assertNotNull(this.daoB);
-        assertNull(this.daoB.getEntityById(1L));
+        assertEquals(0, this.daoA.getAllEntities().size());
+        assertEquals(0, this.daoB.getAllEntities().size());
 
         // Create and store EntityA
-        EntityA entityA = new EntityA();
-        entityA.setAuthorId(1);
-        entityA.setText("Text from author 1");
-        this.daoA.storeEntity(entityA);
-
-        assertEquals(1, this.daoA.getAllEntities().size());
+        this.daoA.storeEntity(new EntityA());
+        this.daoA.storeEntity(new EntityA());
+        assertEquals(2, this.daoA.getAllEntities().size());
 
         // Create and store EntityB
-        EntityB entityB = new EntityB();
-        entityB.setAuthorId(1);
-        entityB.setText("Text from author 1");
-        this.daoB.storeEntity(entityB);
-
-        assertEquals(1, this.daoB.getAllEntities().size());
+        this.daoB.storeEntity(new EntityB());
+        this.daoB.storeEntity(new EntityB());
+        assertEquals(2, this.daoB.getAllEntities().size());
     }
 
 }
