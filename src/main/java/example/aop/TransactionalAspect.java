@@ -55,9 +55,11 @@ public class TransactionalAspect implements BeanPostProcessor, ApplicationListen
         if (this.transactionTemplatesByDao.containsKey(dao)) {
             TransactionTemplate transactionTemplate = this.transactionTemplatesByDao.get(dao);
             final EntityManager em = dao.getEntityManager();
+            logger.debug("Executing @Around joinpoint in a TransactionTemplate");
             retval = transactionTemplate.execute(new TransactionCallback() {
                 @Override
                 public Object doInTransaction(TransactionStatus ts) {
+                    logger.debug("Joining EntityManager with outer transaction");
                     em.joinTransaction(); // Join the template-created transaction
                     Object retval = null;
                     try {
@@ -69,6 +71,7 @@ public class TransactionalAspect implements BeanPostProcessor, ApplicationListen
                     return retval;
                 }
             });
+            logger.debug("Finished TransactionTemplate");
         }
         else {
             throw new IllegalStateException("Cannot support @Transactional on " +
