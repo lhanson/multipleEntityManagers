@@ -9,7 +9,7 @@ Spring 2.5.x provides nice support for declarative transactions via injection
 of the `EntityManagerFactory` using `@PersistenceContext` and demarcation of
 transactional methods using `@Transactional`. However, these only work if there
 is one `EntityManagerFactory` declared in your context. Spring does not honor
-`@PersistenceContext(unitName="..."), nor can you specify a transaction manager
+`@PersistenceContext(unitName="...")`, nor can you specify a transaction manager
  in `@Transactional`.
 
 See also [SPR-3955](https://jira.springframework.org/browse/SPR-3955).
@@ -24,7 +24,7 @@ This sample app demonstrates a way to maintain at least part of the nice
 declarative style of using annotations while adding more than one data source.
 You still need to explicitly inject an `EntityManagerFactory` (and expose it via
 an interface), but through the use of an AOP proxy we can intercept calls to
-@Transactional methods and wrap them in transactions using the appropriate
+`@Transactional` methods and wrap them in transactions using the appropriate
 `EntityManager`.
 
 # Caveats #
