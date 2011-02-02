@@ -15,19 +15,26 @@ is one `EntityManagerFactory` declared in your context. Spring does not honor
 See also [SPR-3955](https://jira.springframework.org/browse/SPR-3955).
 
 Without support for these annotations, you need to explicitly inject the
-`EntityManager[Factory]` and programmatically set transaction boundaries.
+`EntityManager[Factory]` and either programmatically set transaction boundaries
+or specify them in your XML config with <tx:advice/>.
 
 # Solution #
 
 This sample app demonstrates a way to maintain at least part of the nice
-declarative style while adding more than one data source. You still need to
-explicitly inject an `EntityManagerFactory` (and expose it via an interface),
-but through the use of an AOP proxy we can intercept calls to @Transactional
-methods and wrap them in transactions using the appropriate `EntityManager`.
+declarative style of using annotations while adding more than one data source.
+You still need to explicitly inject an `EntityManagerFactory` (and expose it via
+an interface), but through the use of an AOP proxy we can intercept calls to
+@Transactional methods and wrap them in transactions using the appropriate
+`EntityManager`.
 
-*NOTE*: See the TODO file for shortcomings. Notably, this will break unit tests
-unless they're somehow wrapped with rollback semantics, and support for other
-rollback parameters to `@Transactional` are not shown.
+# Caveats #
+
+When unit testing your JPA DAOs, you will need to set up each DAO into its
+own test application context file. This is probably desirable (though a bit
+verbose, XML-wise) because you really should only be testing one piece of
+functionality at a time, and with only one data source/entity manager in the
+test context, you can use the @Transactional annotation normally without any
+workarounds.
 
 # Run it #
 

@@ -1,3 +1,2 @@
-This example does NOT handle rollbacks for unit tests, nor does it take
-@Transactional parameters into account, e.g. @Transactional(readOnly="true") or
-@Transactional(rollbackFor=Some.class)
+This example does not handle @Transactional parameters, e.g.
+@Transactional(readOnly="true") or @Transactional(rollbackFor=Some.class).
