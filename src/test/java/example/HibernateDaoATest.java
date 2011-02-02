@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import example.dao.EntityDaoA;
 import example.om.EntityA;
+import org.springframework.test.annotation.ExpectedException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:testApplicationContextA.xml"})
@@ -33,6 +34,16 @@ public class HibernateDaoATest {
         // Each test should be executed in isolation and rolled back when done
         // Yes, this relies on the order of execution of tests...
         assertEquals(0, this.daoA.getAllEntities().size());
+    }
+
+    @Test
+    @ExpectedException(Exception.class)
+    public void testExceptionPropagation() throws Exception {
+        // Still a blank slate?
+        assertEquals(0, this.daoA.getAllEntities().size());
+
+        // Make sure our @Transactional handler doesn't swallow exceptions
+        this.daoA.throwException();
     }
 
 }

@@ -9,5 +9,6 @@ public interface EntityDaoA {
     EntityA getEntityById(Long id);
     List<EntityA> getAllEntities();
     void storeEntity(EntityA entity);
+    void throwException() throws Exception;
 
 }

@@ -17,10 +17,12 @@ public class EntityDaoAImpl implements EntityDaoA, EntityManagedDao {
     private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
+    @Override
     public EntityA getEntityById(Long id) {
         return this.entityManager.find(EntityA.class, id);
     }
 
+    @Override
     public List<EntityA> getAllEntities() {
         final Query query = this.entityManager.createQuery("from EntityA");
         @SuppressWarnings("unchecked") // the query specifies type
@@ -28,15 +30,24 @@ public class EntityDaoAImpl implements EntityDaoA, EntityManagedDao {
         return entities;
     }
 
+    @Override
     @Transactional
     public void storeEntity(EntityA entity) {
         this.entityManager.persist(entity);
     }
 
+    @Override
+    @Transactional
+    public void throwException() throws Exception {
+        throw new Exception("Testing exception propagation");
+    }
+
+    @Override
     public EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
     }
 
+    @Override
     public void setEntityManagerFactory(EntityManagerFactory emf) {
         this.entityManagerFactory = emf;
         this.entityManager = emf.createEntityManager();

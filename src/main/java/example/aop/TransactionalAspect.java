@@ -67,10 +67,14 @@ public class TransactionalAspect implements BeanPostProcessor, ApplicationListen
                     }
                     catch (Throwable ex) {
                         logger.error("Error invoking transactional method: " + ex.getMessage());
+                        retval = ex;
                     }
                     return retval;
                 }
             });
+            if (retval instanceof Throwable) {
+                throw (Throwable) retval;
+            }
             logger.debug("Finished TransactionTemplate");
         }
         else {
