@@ -1,9 +1,7 @@
 package example.aop;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,7 +30,6 @@ import example.dao.EntityManagedDao;
 @Aspect
 public class TransactionalAspect implements BeanPostProcessor, ApplicationListener {
     private final Log logger = LogFactory.getLog(getClass());
-    private Set<EntityManagedDao> entityManagedDaos = new HashSet<EntityManagedDao>();
     private Map<EntityManagedDao, TransactionTemplate> transactionTemplatesByDao =
         new HashMap<EntityManagedDao, TransactionTemplate>();
 
@@ -96,7 +93,7 @@ public class TransactionalAspect implements BeanPostProcessor, ApplicationListen
                     "Transactional advice depends on an unproxied reference to a \"" +
                     EntityManagedDao.class + "\", instead got \"" + bean.getClass() + "\"");
             }
-            this.entityManagedDaos.add((EntityManagedDao) bean);
+            this.transactionTemplatesByDao.put((EntityManagedDao) bean, null);
         }
         return bean;
     }
@@ -112,7 +109,7 @@ public class TransactionalAspect implements BeanPostProcessor, ApplicationListen
              (event instanceof ContextRefreshedEvent)) {
             // We've stored references to all of our EntityManagedDaos, now
             // create transaction templates for each of them.
-            for (EntityManagedDao dao : this.entityManagedDaos) {
+            for (EntityManagedDao dao : this.transactionTemplatesByDao.keySet()) {
                 EntityManagerFactory emf = dao.getEntityManagerFactory();
                 TransactionTemplate tt =
                     new TransactionTemplate(new JpaTransactionManager(emf));

@@ -34,9 +34,9 @@ own test application context file. This is probably desirable (though a bit
 verbose, XML-wise) because you really should only be testing one piece of
 functionality at a time. With only one data source/entity manager in the
 test context and a default transaction manager bean, it seems as though we can
-rely on Spring to manage transaction semantics of each unit test (automatic
-rollback for each test) while our custom annotation handling manages our
-transactional DAOs.
+rely on Spring to manage the transactional semantics of each unit test
+(automatic rollback for each test) while our custom annotation handling manages
+our transactional DAOs.
 
 # Run it #
 
